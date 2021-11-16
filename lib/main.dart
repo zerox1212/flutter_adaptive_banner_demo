@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'ads/ad_state.dart';
 import 'ads/banner_ad.dart';
 import 'ads/banner_ad_customised.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -44,15 +45,52 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            BannerAD(),
-            BannerADCustomised(),
-          ],
-        ),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: SpeedDial(
+        //marginRight: 18, //FIXME check migration
+        //marginBottom: 20, //FIXME check migration
+        animatedIcon: AnimatedIcons.menu_close,
+        animatedIconTheme: IconThemeData(size: 22.0),
+        overlayColor: Colors.black,
+        overlayOpacity: 0.5,
+        children: [
+          SpeedDialChild(
+              child: Icon(Icons.add_location,),
+              backgroundColor: Colors.lightBlue,
+              label: 'Add GPS Report',
+              labelStyle: TextStyle(fontSize: 18.0),
+          ),
+          SpeedDialChild(
+              child: Icon(Icons.add,
+                  color: Colors.black),
+              backgroundColor: Colors.amber,
+              label: 'Add Placed Report',
+              labelStyle: TextStyle(fontSize: 18.0),
+              ),
+          SpeedDialChild(
+            child: Icon(
+              Icons.my_location,
+              color: Colors.black,
+            ),
+            backgroundColor: Colors.white,
+            label: 'Center',
+            labelStyle: TextStyle(fontSize: 18.0),
+          ),
+        ],
+      ),
+      body:
+      Column(
+        children: [BannerAD(), //Container(), //BannerAD(),
+          Expanded(child:Stack(children: [Container(),Container()])),
+        ],
+      ),
+        // Column(
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   children: <Widget>[
+        //     BannerAD(),
+        //   ],
+        // ),
+      //), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
